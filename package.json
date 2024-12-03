@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "esbuild index.mjs --bundle --platform=node --outfile=dist/index.js",
-    "test": "sam local invoke -e events/email.notification.json",
+    "test": "sam local invoke -e test/util/notification.json",
+    "test:unit": "NODE_OPTIONS=--experimental-vm-modules jest",
     "zip": "zip -r email-receiver-lambda.zip ."
   },
   "author": "",
@@ -18,5 +19,8 @@
     "dotenv": "^16.4.5",
     "esbuild": "^0.24.0",
     "viem": "^2.21.47"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }

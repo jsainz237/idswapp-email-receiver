@@ -1,0 +1,119 @@
+Return-Path: <jsainz236@gmail.com>
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+ by inbound-smtp.us-east-1.amazonaws.com with SMTP id 6hqitkr5afi1gjt435ts9liscu32jlgc8bqmem81
+ for 1000@1337.idswapp.com;
+ Thu, 28 Nov 2024 00:00:06 +0000 (UTC)
+X-SES-Spam-Verdict: PASS
+X-SES-Virus-Verdict: PASS
+Received-SPF: pass (spfCheck: domain of _spf.google.com designates 209.85.208.182 as permitted sender) client-ip=209.85.208.182; envelope-from=jsainz236@gmail.com; helo=mail-lj1-f182.google.com;
+Authentication-Results: amazonses.com;
+ spf=pass (spfCheck: domain of _spf.google.com designates 209.85.208.182 as permitted sender) client-ip=209.85.208.182; envelope-from=jsainz236@gmail.com; helo=mail-lj1-f182.google.com;
+ dkim=pass header.i=@gmail.com;
+ dmarc=pass header.from=gmail.com;
+X-SES-RECEIPT: AEFBQUFBQUFBQUFFMHk3blJKMm1tcG9rQ0V5djJ6TnIrN3ZFd0M3dS9NZW90L2dCdmxrLzRqSEFmbFBXSGhsWHVZM21YVGltUm1VRzF0SjRjNE5LTGF6UCsxeitBVXd2ck5HWFRTc21RdmtUSzY1MnE2S2xGS1NJaWd1M3FxWWh3WGJiRCt2RmRzYm1ySUZ0cGVEWTdsQmFzT1JQbjJnV0pMMUQvelJLMVlQcUQ5OGtCa08ycUJYUElOMTZxcGhuaDUwaTBRWkYvTjNtOEpGODJsb1NWd1I5VjRKY0wxZ2t4Rm9yczlEVnEwekhTRiszRUdaaEZDb3hhMmVDdWk4UWcwdUtIMFpiTUkzL3pLWUFRT0JNcHZ4R2dySW4wZEdyaUJMSVMxQWxyUkhoeEZPd08zZzRlUEE9PQ==
+X-SES-DKIM-SIGNATURE: a=rsa-sha256; q=dns/txt; b=uVsWRsB28OmE52XQptQPu3UWX8rGQqUxEGTPYlRZnGhyLdmuvw8jzzi2fYB2SD/i5w4QfBAEXSm2JJm8wfjPOpDQ7b4OzHjvtfbmdyr32J5n4p0glewlAqoa2miCaIdRobPupTjoJIDTMdAoR2PS5Jvw4tMBTq58zeOtZkm39/o=; c=relaxed/simple; s=ug7nbtf4gccmlpwj322ax3p6ow6yfsug; d=amazonses.com; t=1732752007; v=1; bh=Efz4EwmiZNcgZK2Rr+dlUPsgauR3Jleqw3C/MpTIiyo=; h=From:To:Cc:Bcc:Subject:Date:Message-ID:MIME-Version:Content-Type:X-SES-RECEIPT;
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2ffa97d99d6so2746651fa.1
+        for <1000@1337.idswapp.com>; Wed, 27 Nov 2024 16:00:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1732752005; x=1733356805; darn=1337.idswapp.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Efz4EwmiZNcgZK2Rr+dlUPsgauR3Jleqw3C/MpTIiyo=;
+        b=FUe+yTvUfVXCtbsGhpzHP/y6Yc4NbH9BdAOVbVnL6RjqIZEZWLN4Pk5rDpU7vsmk7O
+         k5yGBqxFu9sjaRkOZ0/XK7/jmnk7ZKZsXX4l7t2OBG08DvF6bLVT8X5hBJ3s5tXK2Jzv
+         daYRhXyFUqbV5aEKVH4OpAe9QzeW2tHfoOzFmaP2UULMiikZrsPID04AZ8OPGDkWcV/k
+         K8nE17EfhRCwxrog9SPEcBxbFJFFgCZ8t/fXEWe013USlQzE9a7D2BM1gfE2BOw4JBxg
+         mXBk49h9jGhyaz5BJIz0l+WqImVs8fxuHv0FFumQztFp3NrOcRnI1lGlR3lgsM/+8UPP
+         G1HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732752005; x=1733356805;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Efz4EwmiZNcgZK2Rr+dlUPsgauR3Jleqw3C/MpTIiyo=;
+        b=ivsxLmSKAk19Euqz6/BEgSs7d+PwKB675+alvxZdAG7yEU345cEPr3vOQ01WphHjzS
+         XP5LWLqXntfCOJi9i2W3NPu3IJiIMYgZMSukiULsTUMKcgftXOiQmiR9G/vJ2SterXGo
+         1qgqIb2+JsBDMPPl4R/3BkH4ulzdMU48oVtyhYtlnuxDz7es8CgXkINrnqHfJTM7PkvS
+         3fTQCBDkK/c/+/5V3NP1ny2esrkEsiwz2n4h6hj+cB2vcqD0BAz/TQErX8/qGktWUxTv
+         Zf8zoddS7/GvqLsehqU9suSPvwbdW8ovv6/TavM0F/g7/I7R/qkyDKVxxCM+ULOb4Jd7
+         z93w==
+X-Gm-Message-State: AOJu0Yx9hcSlajgntvebZFo+5TqTo65bYQyiGRvLCpU4fpAI4MlVmkZl
+	8XlO5Xa7tSMwJT/KlUU/tKrcTn7+R8nBVwqO9XpvZkTRM2/EuJF1y96KyUISUc4VDTqUg7DketT
+	1QzHm0OGd3dpuN3/dtCk0cuJloPTwQA==
+X-Gm-Gg: ASbGnctaNWdATSwO4ecKY6nlHKNBElyuuRo9DEvmfwLU7uQV4pbrCJJNYEw2cuggRcw
+	lnM8KeWpeTfR5Qqfx0A/UVK2ErBW0GZ2im8PQWRWZK8DWwt9hNaCT1a5xE0pbCQqM
+X-Google-Smtp-Source: AGHT+IFvSr30SNa2slh0/nZrm5v2pE1JOcT71beNOgH3uA+b/QVZ13+dlFByOhjQU/O1gU81rudwwDDjnykC0slRf+0=
+X-Received: by 2002:a05:651c:1582:b0:2f3:f7cf:2f01 with SMTP id
+ 38308e7fff4ca-2ffd615df62mr29164131fa.41.1732752004989; Wed, 27 Nov 2024
+ 16:00:04 -0800 (PST)
+MIME-Version: 1.0
+References: <CAHkbcoZB+vwcFMK3-bVy+oiVmYZYSSWks7a3kWsNG=PTw2TGAw@mail.gmail.com>
+ <CAHkbcoYdnnY1FABBKnohKbTn2NnfG-vqRo-nErQLVt=yefKAQw@mail.gmail.com>
+ <CAHkbcoa0SFOvOoHkpbQ9h9aYZFPJFQrQcqu1PFqMUN9g_5DYcQ@mail.gmail.com> <CAHkbcoYkaTowSZNAnf1SK1Dyu=qSCDBmb=HaV_jSxBKucQYBDg@mail.gmail.com>
+In-Reply-To: <CAHkbcoYkaTowSZNAnf1SK1Dyu=qSCDBmb=HaV_jSxBKucQYBDg@mail.gmail.com>
+From: <jsainz236@gmail.com>
+Date: Wed, 27 Nov 2024 17:59:54 -0600
+Message-ID: <CAHkbcoZ2NNvdovw_M7ncio=7D1QkjewJaYWdrt_XxfAoc=6vLA@mail.gmail.com>
+Subject: Re: Lambda Test 11/27/24
+To: 1000@1337.idswapp.com
+Content-Type: multipart/alternative; boundary="000000000000bdc9600627edc369"
+
+--000000000000bdc9600627edc369
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Lambda test #8
+
+On Wed, Nov 27, 2024 at 5:53=E2=80=AFPM <jsainz236@gmail.com> w=
+rote:
+
+> Lambda Test #7
+>
+> On Wed, Nov 27, 2024 at 5:51=E2=80=AFPM <jsainz236@gmail.com>=
+ wrote:
+>
+>> lambda test #6
+>>
+>> On Wed, Nov 27, 2024 at 1:58=E2=80=AFPM Jesse Sainz <jsainz236@gmail.com=
+> wrote:
+>>
+>>> Lambda test #5
+>>>
+>>> On Wed, Nov 27, 2024 at 1:51=E2=80=AFPM Jesse Sainz <jsainz236@gmail.co=
+m> wrote:
+>>>
+>>>> lambda test #4
+>>>>
+>>>
+
+--000000000000bdc9600627edc369
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Lambda test #8</div><br><div class=3D"gmail_quote gmail_qu=
+ote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Nov 27, 2024 a=
+t 5:53=E2=80=AFPM Jesse Sainz &lt;<a href=3D"mailto:jsainz236@gmail.com">js=
+ainz236@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote"=
+ style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
+adding-left:1ex"><div dir=3D"ltr">Lambda Test #7</div><br><div class=3D"gma=
+il_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Nov 27, 2024 at 5:5=
+1=E2=80=AFPM Jesse Sainz &lt;<a href=3D"mailto:jsainz236@gmail.com" target=
+=3D"_blank">jsainz236@gmail.com</a>&gt; wrote:<br></div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex"><div dir=3D"ltr">lambda test #6</div><br><=
+div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Nov=
+ 27, 2024 at 1:58=E2=80=AFPM Jesse Sainz &lt;<a href=3D"mailto:jsainz236@gm=
+ail.com" target=3D"_blank">jsainz236@gmail.com</a>&gt; wrote:<br></div><blo=
+ckquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left=
+:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">Lambda test =
+#5</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr=
+">On Wed, Nov 27, 2024 at 1:51=E2=80=AFPM Jesse Sainz &lt;<a href=3D"mailto=
+:jsainz236@gmail.com" target=3D"_blank">jsainz236@gmail.com</a>&gt; wrote:<=
+br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
+x;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"=
+>lambda test #4</div>
+</blockquote></div>
+</blockquote></div>
+</blockquote></div>
+</blockquote></div>
+
+--000000000000bdc9600627edc369--
