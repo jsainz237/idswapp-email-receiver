@@ -1,0 +1,36 @@
+AWSTemplateFormatVersion: '2010-09-01'
+Transform: AWS::Serverless-2016-10-31
+Description: Email receiver lambda for IDSwapp email forwarding
+
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 128
+
+Resources:
+  EmailReceiverFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./
+      Handler: index.handler
+      Runtime: nodejs18.x
+      Architectures:
+        - x86_64
+      Events:
+        SNSEvent:
+          Type: SNS
+          Properties:
+            Topic: !Ref EmailTopic
+
+  EmailTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: IDSwapp Email Notifications
+
+Outputs:
+  EmailReceiverFunction:
+    Description: Email Receiver Lambda Function ARN
+    Value: !GetAtt EmailReceiverFunction.Arn
+  EmailTopic:
+    Description: SNS Topic ARN
+    Value: !Ref EmailTopic

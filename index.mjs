@@ -1,12 +1,10 @@
 import AWS from 'aws-sdk';
-import dotenv from 'dotenv';
 import { readContract } from "@wagmi/core";
 
+import { processEmail } from "./process-email.mjs";
 import { IDSwappFactoryAbi, IDSwappAccountAbi } from "./abi.js";
 import wagmiConfig from "./wagmi.config.js";
 import config from "./config.mjs";
-
-dotenv.config();
 
 const ACCOUNT_REGEX = /^\d+@\d+\.idswapp\.com$/;
 const INVALID_ADDRESS = "0x0000000000000000000000000000000000000000";
@@ -49,7 +47,7 @@ export const handler = async event => {
       abi: IDSwappAccountAbi,
       address: contractAddr,
       functionName: "privateDetails",
-      account: config.ADMIN_ADDRESS,
+      account: config.ADMIN_ADDRESS[chainId],
     });
 
     if (!forwardEmail) {
@@ -58,12 +56,9 @@ export const handler = async event => {
     }
 
     const data = Buffer.from(notification.content, "base64").toString("utf-8");
+    const modifiedEmail = processEmail(data, forwardEmail);
 
-    await ses.sendRawEmail({
-      Source: process.env.SES_MAIL_FROM,
-      Destinations: [forwardEmail],
-      RawMessage: { Data: data },
-    }).promise();
+    await ses.sendRawEmail({ RawMessage: { Data: modifiedEmail } }).promise();
     console.log(`Email forwarded to ${forwardEmail}`);
   } catch (error) {
     console.error(error);
