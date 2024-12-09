@@ -6,7 +6,7 @@ dotenv.config(path.resolve(".env"));
 export default {
   ...process.env,
   ADMIN_ADDRESS: {
-    56: undefined,
+    56: process.env.ADMIN_ADDRESS_56,
     97: process.env.ADMIN_ADDRESS_97,
     1337: process.env.ADMIN_ADDRESS_1337,
   },
