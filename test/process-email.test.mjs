@@ -70,7 +70,7 @@ describe("processEmail", () => {
 
     (async () => {
       emailData = await getEmailData();
-      const modifiedEmail = processEmail(emailData, forwardingEmail);
+      const modifiedEmail = processEmail(emailData, forwardToEmail);
       await writeModifiedData(modifiedEmail);
     })();
 
