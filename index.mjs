@@ -9,7 +9,7 @@ import config from "./config.mjs";
 const ACCOUNT_REGEX = /^\d+@\d+\.idswapp\.com$/;
 const INVALID_ADDRESS = "0x0000000000000000000000000000000000000000";
 
-const ses = new AWS.SES();
+const ses = new AWS.SESV2({ region: "us-east-1" });
 
 export const handler = async event => {
   try {
@@ -58,7 +58,7 @@ export const handler = async event => {
     const data = Buffer.from(notification.content, "base64").toString("utf-8");
     const modifiedEmail = processEmail(data, forwardEmail);
 
-    await ses.sendRawEmail({ RawMessage: { Data: modifiedEmail } }).promise();
+    await ses.sendEmail({ Content: { Raw: { Data: modifiedEmail } } }).promise();
     console.log(`Email forwarded to ${forwardEmail}`);
   } catch (error) {
     console.error(error);

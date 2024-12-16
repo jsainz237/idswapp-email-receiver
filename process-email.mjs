@@ -15,7 +15,7 @@ export function processEmail(emailData, forwardTo) {
   const newReplyTo = senderName
     ? `Reply-To: ${senderName} <${senderEmail}>`
     : `Reply-To: <${senderEmail}>`;
-  const newTo = `To: ${forwardTo}`;
+  const newTo = `To: <${forwardTo}>`;
   
   // Replace/add headers
   const modifiedEmail = emailData
